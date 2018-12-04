@@ -43,6 +43,8 @@ public class Main {
             System.out.println(client.headerPackets.size());
             System.out.println(client.heap.size());
 
+            client.partitionFiles();
+
 
         } catch (SocketException se) {
 
