@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            Client client = new Client();
+            PacketProcessor processor = new PacketProcessor();
 
             byte[] buf = new byte[1028];
             int port = 6014;
@@ -28,22 +28,27 @@ public class Main {
             socket.send(packet);
 
             // Getting a response back
-            while ((client.lastPackets.size() < 3) || (client.heap.size() < client.numPackets)) {
+            byte[] received;
+//            byte[] copy;
+            while ((processor.lastPackets.size() < 3) || (processor.heap.size() < processor.numPackets)) {
 
                 packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-                byte[] received;
+
                 received = packet.getData();
 
-                client.checkPacketType(received);
+                byte[] copy;
+                copy = Arrays.copyOf(received, received.length);
+
+                processor.checkPacketType(copy);
 
 
             }
-            System.out.println(client.lastPackets.size());
-            System.out.println(client.headerPackets.size());
-            System.out.println(client.heap.size());
+            System.out.println(processor.lastPackets.size());
+            System.out.println(processor.headerPackets.size());
+            System.out.println(processor.heap.size());
 
-            client.partitionFiles();
+            processor.partitionFiles();
 
 
         } catch (SocketException se) {

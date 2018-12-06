@@ -9,7 +9,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
-public class Client {
+public class PacketProcessor {
 
     ArrayList<byte[]> heap = new ArrayList<byte[]>();
     ArrayList<byte[]> lastPackets = new ArrayList<byte[]>();
@@ -50,7 +50,7 @@ public class Client {
                 heap.add(received);
             }
         } else {
-            System.out.println("This should be a header packet");
+//            System.out.println("This should be a header packet");
             headerPackets.add(received);
         }
     }
@@ -81,11 +81,13 @@ public class Client {
 
         }
         System.out.println();
-        for (int i = 0; i < file1.size(); i++) {
-            int packetID = file1.get(i)[1];
-           // System.out.println(packetID);
-           // System.out.println(file1.size());
-        }
+//        for (int i = 0; i < file2.size(); i++) {
+//            int packetID = file2.get(i)[1];
+//            System.out.println(packetID);
+//        }
+        System.out.println("1: " + file1.size());
+        System.out.println("2: " + file2.size());
+        System.out.println("3: " + file3.size());
         System.out.println();
 
     }
