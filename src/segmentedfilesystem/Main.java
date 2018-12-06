@@ -51,6 +51,13 @@ public class Main {
             processor.partitionFiles();
             processor.sortFiles();
 
+            for(int i = 0; i<processor.file1.size(); i++){
+                for(int j = 4; j<processor.file1.get(i).length; j++){
+                    System.out.write(processor.file1.get(i)[j]);
+                }
+
+            }
+
 
         } catch (SocketException se) {
 

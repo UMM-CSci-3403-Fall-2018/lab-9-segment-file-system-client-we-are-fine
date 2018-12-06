@@ -102,9 +102,9 @@ public class PacketProcessor {
         Collections.sort(file2, comparator);
         Collections.sort(file3, comparator);
 
-        for(int i = 0; i < file2.size(); i++) {
-            System.out.println(getPacketNumber(file2.get(i)));
-        }
+//        for(int i = 0; i < file2.size(); i++) {
+//            System.out.println(getPacketNumber(file2.get(i)));
+//        }
 
     }
 
