@@ -8,6 +8,8 @@ import java.io.*;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Collections;
 
 public class PacketProcessor {
 
@@ -31,7 +33,7 @@ public class PacketProcessor {
 
         int packetNumber = 256 * packetByte1 + packetByte2;
 
-        System.out.println("packet number: " + packetNumber);
+     //   System.out.println("packet number: " + packetNumber);
 
         return packetNumber + 1; // The packet count starts at 0, so 1 is added
     }
@@ -91,4 +93,27 @@ public class PacketProcessor {
         System.out.println();
 
     }
+
+    public void sortFiles() {
+
+        PacketComparator comparator = new PacketComparator();
+
+        Collections.sort(file1, comparator);
+        Collections.sort(file2, comparator);
+        Collections.sort(file3, comparator);
+
+        for(int i = 0; i < file2.size(); i++) {
+            System.out.println(getPacketNumber(file2.get(i)));
+        }
+
+    }
+
+    class PacketComparator implements Comparator<byte[]> {
+
+        public int compare(byte[] packet1, byte[] packet2) {
+            return getPacketNumber(packet1) - (getPacketNumber(packet2));
+        }
+
+    }
+
 }

@@ -49,6 +49,7 @@ public class Main {
             System.out.println(processor.heap.size());
 
             processor.partitionFiles();
+            processor.sortFiles();
 
 
         } catch (SocketException se) {
