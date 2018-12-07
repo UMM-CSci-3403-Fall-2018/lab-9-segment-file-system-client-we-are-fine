@@ -11,6 +11,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Collections;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 public class PacketProcessor {
 
     ArrayList<byte[]> heap = new ArrayList<byte[]>();
@@ -83,15 +87,43 @@ public class PacketProcessor {
 
         }
         System.out.println();
-//        for (int i = 0; i < file2.size(); i++) {
-//            int packetID = file2.get(i)[1];
-//            System.out.println(packetID);
-//        }
+        for (int i = 0; i < file1.size(); i++) {
+            int packetID = file1.get(i)[1];
+            System.out.println(packetID);
+        }
         System.out.println("1: " + file1.size());
         System.out.println("2: " + file2.size());
         System.out.println("3: " + file3.size());
         System.out.println();
 
+    }
+
+    public void writeFiles() throws IOException {
+
+//        byte[] byteFileName = new byte[0];
+        for(int k = 0; k<headerPackets.size(); k++) {
+            byte[] header = headerPackets.get(k);
+
+            byte[] byteFileName = new byte[header.length - 2];
+            for (int i = 0; i < byteFileName.length; i++) {
+                byteFileName[i] = header[i + 2];
+//            System.out.write(headerPackets.get(0)[i]);
+            }
+
+
+            String fileName = new String(byteFileName);
+            System.out.println(fileName);
+
+            FileOutputStream out = new FileOutputStream(fileName);
+            for (int i = 0; i < file1.size(); i++) {
+                byte[] file = file1.get(i);
+                for (int j = 4; j < file.length; j++) {
+                    out.write(file[j]);
+                    //System.out.println(file[j]);
+                }
+            }
+            out.close();
+        }
     }
 
     public void sortFiles() {

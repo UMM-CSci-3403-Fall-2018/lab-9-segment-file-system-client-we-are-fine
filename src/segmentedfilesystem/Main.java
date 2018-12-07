@@ -9,7 +9,6 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
-
 public class Main {
 
     public static void main(String[] args) {
@@ -29,7 +28,6 @@ public class Main {
 
             // Getting a response back
             byte[] received;
-//            byte[] copy;
             while ((processor.lastPackets.size() < 3) || (processor.heap.size() < processor.numPackets)) {
 
                 packet = new DatagramPacket(buf, buf.length);
@@ -50,13 +48,13 @@ public class Main {
 
             processor.partitionFiles();
             processor.sortFiles();
+            processor.writeFiles();
 
-            for(int i = 0; i<processor.file1.size(); i++){
-                for(int j = 4; j<processor.file1.get(i).length; j++){
-                    System.out.write(processor.file1.get(i)[j]);
-                }
-
-            }
+//            for(int i = 0; i<processor.file1.size(); i++){
+//                for(int j = 4; j<processor.file1.get(i).length; j++){
+//                    System.out.write(processor.file1.get(i)[j]);
+//                }
+//            }
 
 
         } catch (SocketException se) {
