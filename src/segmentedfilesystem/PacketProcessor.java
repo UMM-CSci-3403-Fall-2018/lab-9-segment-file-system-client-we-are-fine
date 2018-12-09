@@ -37,8 +37,6 @@ public class PacketProcessor {
 
         int packetNumber = 256 * packetByte1 + packetByte2;
 
-     //   System.out.println("packet number: " + packetNumber);
-
         return packetNumber + 1; // The packet count starts at 0, so 1 is added
     }
 
@@ -56,7 +54,6 @@ public class PacketProcessor {
                 heap.add(received);
             }
         } else {
-//            System.out.println("This should be a header packet");
             headerPackets.add(received);
         }
     }
@@ -65,11 +62,6 @@ public class PacketProcessor {
 
         int file1ID = headerPackets.get(0)[1];
         int file2ID = headerPackets.get(1)[1];
-        int file3ID = headerPackets.get(2)[1];
-
-        System.out.println(file1ID);
-        System.out.println(file2ID);
-        System.out.println(file3ID);
 
         for(int i = 0; i < heap.size(); i++) {
             byte[] packet = heap.get(i);
@@ -86,28 +78,16 @@ public class PacketProcessor {
             }
 
         }
-        System.out.println();
-        for (int i = 0; i < file1.size(); i++) {
-            int packetID = file1.get(i)[1];
-            System.out.println(packetID);
-        }
-        System.out.println("1: " + file1.size());
-        System.out.println("2: " + file2.size());
-        System.out.println("3: " + file3.size());
-        System.out.println();
-
     }
 
     public void writeFiles() throws IOException {
 
-//        byte[] byteFileName = new byte[0];
         for(int k = 0; k<headerPackets.size(); k++) {
             byte[] header = headerPackets.get(k);
 
             byte[] byteFileName = new byte[header.length - 2];
             for (int i = 0; i < byteFileName.length; i++) {
                 byteFileName[i] = header[i + 2];
-//            System.out.write(headerPackets.get(0)[i]);
             }
 
 
@@ -115,16 +95,17 @@ public class PacketProcessor {
             System.out.println(fileName);
 
             FileOutputStream out = new FileOutputStream(fileName);
-            for (int i = 0; i < file1.size(); i++) {
-                byte[] file = file1.get(i);
+            for (int i = 0; i < file3.size(); i++) {
+                byte[] file = file3.get(i);
                 for (int j = 4; j < file.length; j++) {
                     out.write(file[j]);
-                    //System.out.println(file[j]);
                 }
             }
             out.close();
         }
     }
+
+
 
     public void sortFiles() {
 
@@ -133,10 +114,6 @@ public class PacketProcessor {
         Collections.sort(file1, comparator);
         Collections.sort(file2, comparator);
         Collections.sort(file3, comparator);
-
-//        for(int i = 0; i < file2.size(); i++) {
-//            System.out.println(getPacketNumber(file2.get(i)));
-//        }
 
     }
 

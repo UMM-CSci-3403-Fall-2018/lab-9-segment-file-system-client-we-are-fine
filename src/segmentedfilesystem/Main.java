@@ -27,29 +27,26 @@ public class Main {
             socket.send(packet);
 
             // Getting a response back
-            byte[] received;
+            System.out.println("Receiving Packets...");
             while ((processor.lastPackets.size() < 3) || (processor.heap.size() < processor.numPackets)) {
 
                 packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
 
-                received = packet.getData();
+                byte[] received = new byte[packet.getLength()];
+                System.arraycopy(packet.getData(), packet.getOffset(), received, 0, packet.getLength());
 
-                byte[] copy;
-                copy = Arrays.copyOf(received, received.length);
-
-                processor.checkPacketType(copy);
+                processor.checkPacketType(received);
 
 
             }
-            System.out.println(processor.lastPackets.size());
-            System.out.println(processor.headerPackets.size());
-            System.out.println(processor.heap.size());
+            System.out.println("Assembling files...");
 
             processor.partitionFiles();
             processor.sortFiles();
             processor.writeFiles();
 
+            System.out.println("done.");
 //            for(int i = 0; i<processor.file1.size(); i++){
 //                for(int j = 4; j<processor.file1.get(i).length; j++){
 //                    System.out.write(processor.file1.get(i)[j]);
