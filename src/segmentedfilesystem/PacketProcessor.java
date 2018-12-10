@@ -1,19 +1,10 @@
 package segmentedfilesystem;
 
 import java.util.ArrayList;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.io.*;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Collections;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
 public class PacketProcessor {
 
@@ -59,7 +50,6 @@ public class PacketProcessor {
     }
 
     public void partitionFiles() {
-
         int file1ID = headerPackets.get(0)[1];
         int file2ID = headerPackets.get(1)[1];
 
@@ -90,15 +80,21 @@ public class PacketProcessor {
                 byteFileName[i] = header[i + 2];
             }
 
-
             String fileName = new String(byteFileName);
             System.out.println(fileName);
 
+            ArrayList<byte[]> file = file1;
+            if(k == 1) {
+                file = file2;
+            } else if (k == 2) {
+                file = file3;
+            }
+
             FileOutputStream out = new FileOutputStream(fileName);
-            for (int i = 0; i < file3.size(); i++) {
-                byte[] file = file3.get(i);
-                for (int j = 4; j < file.length; j++) {
-                    out.write(file[j]);
+            for (int i = 0; i < file.size(); i++) {
+                byte[] fileData = file.get(i);
+                for (int j = 4; j < fileData.length; j++) {
+                    out.write(fileData[j]);
                 }
             }
             out.close();

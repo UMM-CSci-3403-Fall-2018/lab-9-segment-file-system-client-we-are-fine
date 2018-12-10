@@ -40,19 +40,15 @@ public class Main {
 
 
             }
+            socket.close();
+
             System.out.println("Assembling files...");
 
             processor.partitionFiles();
             processor.sortFiles();
             processor.writeFiles();
 
-            System.out.println("done.");
-//            for(int i = 0; i<processor.file1.size(); i++){
-//                for(int j = 4; j<processor.file1.get(i).length; j++){
-//                    System.out.write(processor.file1.get(i)[j]);
-//                }
-//            }
-
+            System.out.println("Done.");
 
         } catch (SocketException se) {
 
